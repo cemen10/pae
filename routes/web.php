@@ -33,3 +33,6 @@ Route::get('/planillas', 'CoberturaController@planillas');
 Route::post('/cobertura/busMunicipios', 'CoberturaController@busMunicipios');
 Route::post('/cobertura/busColegios', 'CoberturaController@busColegios');
 // RUTAS COBERTURAS
+
+Route::get('descargarVista/{opc}/{cod_sede}/{cod_?}', 'FormatoController@downloadVista', function ($cod_ = null) {});
+Route::get('/cobertura/generar', 'CoberturaController@generar');

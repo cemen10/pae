@@ -17,6 +17,17 @@ class CoberturaController extends Controller
         }
     }
 
+    public function generar()
+    {
+        if (Auth::check()) {
+            $dompdf = App("dompdf.wrapper");
+            $dompdf->loadView("formatos.generar")->setPaper("8.5x14", 'landscape');
+            return $dompdf->stream("Planilla.pdf");
+        } else {
+            return redirect("/")->with("error", "Su sesion ha terminado");
+        }
+    }
+
     public function subir()
     {
         if (Auth::check()) {

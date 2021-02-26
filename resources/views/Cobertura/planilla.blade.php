@@ -155,6 +155,7 @@
 @section('scripts')
 <script>
   $(document).ready(function () {
+    let coberturaGlobal = 0;
     $("#cobertura").on({
       change: function(){
         if($(this).val() === "0"){
@@ -189,6 +190,7 @@
 
         }
         let id = $(this).val();
+        coberturaGlobal = id;  
         var form = $("#formBusMun");
         var token = $("#token").val();
         let data = new FormData();
@@ -374,7 +376,8 @@
                         campo += "<div class='kt-badge kt-badge--danger kt-badge--inline kt-badge--pill kt-badge--rounded'>"+ number_format(respuesta.listado[i].listadoSedes[j].total_alumnos, 0) + "</div>"
                       campo += "</div>";                      
                       campo += "<div class='col-md-2'>";
-                        campo += "<a class='btn btn-outline-primary btn-icon btn-sm' href='#'><i class='la la-print'></i>";
+                        let rutaSedes = '{{url("/descargarVista/SEDES/")}}/' + respuesta.listado[i].listadoSedes[j].cod_sede + "/" + coberturaGlobal;                        
+                        campo += "<a target='_blank' class='btn btn-outline-primary btn-icon btn-sm' href='"+rutaSedes+"'><i class='la la-print'></i>";
                       campo += "</div>";  
                     campo += "</div>";
                     campo += "<div class='kt-space-5'></div>";
@@ -435,13 +438,6 @@
         $("#modalMunicipios").modal("show");
     });    
 
-    $('#detalleColegio').on("click", ".menupeque", function (e) {
-        e.preventDefault();
-        var fila = $(this).parents('tr');
-        let cod_escuela = fila.data('id');
-
-        alert(cod_escuela);
-    });
 
     function number_format(amount, decimals) {
 
