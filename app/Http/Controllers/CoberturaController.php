@@ -132,11 +132,12 @@ class CoberturaController extends Controller
     {
         if (Auth::check()) {
             $id = request()->get('id');
+            $cod_mun = request()->get('id_mun');
             $opc = "NO";
             $municipios = \App\Estudiante::buscarMunicipios($id);
             $total_cobertura = \App\Estudiante::totalCobertura($id);
             // LISTAR NUMERO DE COLEGIOS Y TOTAL ESTUDIANTES POR MUNICIPIOS
-            $listado = \App\Estudiante::listarTotColTotEstMun($id);
+            $listado = \App\Estudiante::listarTotColTotEstMun($id, $cod_mun);
             // LISTAR NUMERO DE COLEGIOS Y TOTAL ESTUDIANTES POR MUNICIPIOS
             if ($municipios) {
                 $opc = "SI";
@@ -149,6 +150,44 @@ class CoberturaController extends Controller
                     'opc' => $opc,
                 ]);
             }
+        } else {
+            return redirect("/")->with("error", "Su sesion ha terminado");
+        }
+    }
+
+    public function busColegios()
+    {
+        if (Auth::check()) {
+            $cod_mun = request()->get('cod_mun');
+            $opc = "NO";
+
+            // LISTAR NUMERO DE COLEGIOS Y TOTAL ESTUDIANTES POR MUNICIPIOS
+            $listado = \App\Estudiante::listarTotSedTotEst($cod_mun);
+
+            foreach ($listado as $lis) {
+                $listadoSedes = \App\Estudiante::listarTotSed($lis->cod_escuela);
+                $lis->listadoSedes = $listadoSedes;
+            }
+            // LISTAR NUMERO DE COLEGIOS Y TOTAL ESTUDIANTES POR MUNICIPIOS
+            if ($listado) {
+                $opc = "SI";
+            }
+            if (request()->ajax()) {
+                return response()->json([
+                    'listado' => $listado,
+                    'opc' => $opc,
+                ]);
+            }
+        } else {
+            return redirect("/")->with("error", "Su sesion ha terminado");
+        }
+    }
+
+    public function descargar()
+    {
+        if (Auth::check()) {
+            $ruta1 = public_path() . '/documentos/modelos/modelo.xlsx';
+            return response()->download($ruta1);
         } else {
             return redirect("/")->with("error", "Su sesion ha terminado");
         }

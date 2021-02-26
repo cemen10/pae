@@ -27,7 +27,9 @@ Route::put('/productos/modificar/{id}', 'ProductoController@modificar');
 
 // RUTAS COBERTURAS
 Route::get('/cobertura', 'CoberturaController@gestion');
+Route::get('/cobertura/descargar', 'CoberturaController@descargar');
 Route::post('/cobertura/subir', 'CoberturaController@subir');
 Route::get('/planillas', 'CoberturaController@planillas');
 Route::post('/cobertura/busMunicipios', 'CoberturaController@busMunicipios');
+Route::post('/cobertura/busColegios', 'CoberturaController@busColegios');
 // RUTAS COBERTURAS

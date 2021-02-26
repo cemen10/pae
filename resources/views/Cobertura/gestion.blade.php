@@ -69,6 +69,20 @@
               <div class="upload_file">
                 <div class="form-group row">
                   <div class="col-lg-12">
+                    <div class="alert alert-light alert-elevate" role="alert">
+                      <div class="alert-icon"><i class="flaticon-warning kt-font-brand"></i></div>
+                      <div class="alert-text">
+                        <b>1</b>. EL documento excel debe tener los emcabezados tal cual lo contiene el documento de descarga<br>
+                        <b>2</b>. Todas las columnas del documento excel deben ser de formato texto<br>
+                        <b>3</b>. EL documento excel debe contener un solo libro<br>
+
+                        <b>?</b>. Descargue el formato modelo, para evitar errores al subir la cobertura
+                      </div>
+                    </div>                                      
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-12">
                     <label>Archivo o Documento de Excel</label>
                     <div></div>
                     <div class="custom-file">
@@ -95,7 +109,7 @@
               <div class="kt-separator kt-separator--brand"></div>
               <!--end::Form-->
               <div class="row justify-content-center">
-                <div class="col-lg-4">
+                <div class="col-lg-5">
                   <button type="buttom" class="btn btn-primary btn-sm" id="btnGuardar">
                     <i id='iconoBoton' class="fa fa-edit"></i>
                     Subir</button>&nbsp;
@@ -103,6 +117,8 @@
                     Cancelar</a>&nbsp;
                   <a href="{{ url('/administracion') }}" class="btn btn-danger btn-sm"><i
                       class="fa fa-angle-double-left"></i> Volver</a>&nbsp;
+                  <a href="{{ url('/cobertura/descargar') }}" class="btn btn-success btn-sm"><i
+                      class="fa fa-cloud-download-alt"></i> Descargar</a>&nbsp;
                 </div>
               </div>
             </form>
