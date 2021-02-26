@@ -97,9 +97,9 @@
                     <td style='font-weight: normal;vertical-align: middle;text-transform: capitalize;'>
                       {{$usu->peso}}</td>
                     <td style='font-weight: normal;vertical-align: middle;text-transform: capitalize;'>
-                      {{$usu->unidad_id}}</td>
+                      {{$usu->unidad->nombre}}</td>
                     <td style='font-weight: normal;vertical-align: middle;text-transform: capitalize;'>
-                      {{$usu->nombreC}}</td>
+                      {{$usu->componente->nombre}}</td>
                     <td style='font-weight: normal;vertical-align: middle;text-transform: capitalize;'>
                       {{$usu->detalle}}</td>
                     @if($usu->estado=='Activo')

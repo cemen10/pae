@@ -107,4 +107,9 @@ class Proveedor extends Model
         ]);
         return $respuesta;
     }
+
+    public function productos()
+    {
+        return $this->hasMany(Producto::class);
+    }
 }

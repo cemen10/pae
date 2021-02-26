@@ -24,19 +24,26 @@ class Producto extends Model
             $pagina--;
             $offset = $pagina * $limit;
         }
+
         if (!empty($busqueda)) {
-            $respuesta = Producto::join('componentes', 'componentes.id', 'productos.componente_id')
+
+            $respuesta = \App\Producto::where('estado', 'Activo')
                 ->where(function ($query) use ($busqueda) {
-                    $query->where('productos.nombre', 'LIKE', '%' . $busqueda . '%')
-                        ->orWhere('unidad_id', 'LIKE', '%' . $busqueda . '%');
+                    $query->where('nombre', 'like', "%{$busqueda}%")
+                        ->orWhere('peso', 'like', "%{$busqueda}%")
+                        ->orWhere('detalle', 'like', "%{$busqueda}%");
                 })
-                ->select('productos.*', 'componentes.nombre as nombreC')
-                ->orderBy('productos.id', 'DESC')
+                ->orWhereHas('unidad', function ($query) use ($busqueda) {
+                    $query->where('nombre', 'like', "%{$busqueda}%");
+                })
+                ->orWhereHas('componente', function ($query) use ($busqueda) {
+                    $query->where('nombre', 'like', "%{$busqueda}%");
+                })
+                ->orderBy('id', 'DESC')
                 ->limit($limit)->offset($offset)->get();
         } else {
-            $respuesta = Producto::join('componentes', 'componentes.id', 'productos.componente_id')
-                ->select('productos.*', 'componentes.nombre as nombreC')
-                ->orderBy('productos.id', 'DESC')
+            $respuesta = \App\Producto::where('estado', 'Activo')
+                ->orderBy('id', 'DESC')
                 ->limit($limit)->offset($offset)->get();
         }
 
@@ -46,15 +53,21 @@ class Producto extends Model
     public static function numero_de_registros($busqueda)
     {
         if (!empty($busqueda)) {
-            $respuesta = Producto::join('componentes', 'componentes.id', 'productos.componente_id')
+            $respuesta = \App\Producto::where('estado', 'Activo')
                 ->where(function ($query) use ($busqueda) {
-                    $query->where('productos.nombre', 'LIKE', '%' . $busqueda . '%')
-                        ->orWhere('unidad_id', 'LIKE', '%' . $busqueda . '%');
+                    $query->where('nombre', 'like', "%{$busqueda}%")
+                        ->orWhere('peso', 'like', "%{$busqueda}%")
+                        ->orWhere('detalle', 'like', "%{$busqueda}%");
+                })
+                ->orWhereHas('unidad', function ($query) use ($busqueda) {
+                    $query->where('nombre', 'like', "%{$busqueda}%");
+                })
+                ->orWhereHas('componente', function ($query) use ($busqueda) {
+                    $query->where('nombre', 'like', "%{$busqueda}%");
                 })
                 ->count();
         } else {
-            $respuesta = Producto::join('componentes', 'componentes.id', 'productos.componente_id')
-                ->count();
+            $respuesta = Producto::count();
         }
         return $respuesta;
     }
@@ -93,5 +106,14 @@ class Producto extends Model
             'componente_id' => $datos['componente_id'],
         ]);
         return $respuesta;
+    }
+
+    public function unidad()
+    {
+        return $this->belongsTo(Unidad::class);
+    }
+    public function componente()
+    {
+        return $this->belongsTo(Componente::class);
     }
 }

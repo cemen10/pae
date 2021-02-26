@@ -28,4 +28,6 @@ Route::put('/productos/modificar/{id}', 'ProductoController@modificar');
 // RUTAS COBERTURAS
 Route::get('/cobertura', 'CoberturaController@gestion');
 Route::post('/cobertura/subir', 'CoberturaController@subir');
+Route::get('/planillas', 'CoberturaController@planillas');
+Route::post('/cobertura/busMunicipios', 'CoberturaController@busMunicipios');
 // RUTAS COBERTURAS

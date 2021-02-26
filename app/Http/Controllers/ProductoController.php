@@ -17,7 +17,7 @@ class ProductoController extends Controller
                 $actual = 1;
             }
             $limit = 10;
-            $producto = \App\Producto::listar($busqueda, $actual, $limit);
+            $producto = \App\Producto::listar($busqueda, $actual, $limit);       
             $numero_filas = \App\Producto::numero_de_registros(request()->get('txtbusqueda'));
             $paginas = ceil($numero_filas / $limit); //$numero_filas/10;
             return view('Producto.gestion', compact('producto', 'numero_filas', 'paginas', 'actual', 'limit', 'busqueda'));
